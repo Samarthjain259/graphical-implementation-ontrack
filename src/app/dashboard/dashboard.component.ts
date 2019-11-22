@@ -62,6 +62,7 @@ export class DashboardComponent implements OnInit {
   isForButton : boolean = false;
   vehicaldetails =[];
   waittingList =[];
+  selected: string;
   vehicalObj = {
     "v_n":"",
     "date":""
