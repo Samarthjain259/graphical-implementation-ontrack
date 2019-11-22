@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import * as Chartist from 'chartist';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,7 +58,44 @@ export class DashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
-  constructor() { }
+  modalRef: BsModalRef;
+  isForButton : boolean = false;
+  vehicaldetails =[];
+  waittingList =[];
+  vehicalObj = {
+    "v_n":"",
+    "date":""
+  }
+  constructor(private modalService: BsModalService) {
+    this.vehicaldetails =[
+      {"v_n":"pb09-1234", "date":"06-11-2019"},
+      {"v_n":"pb09-1234", "date":"06-11-2019"},
+      {"v_n":"pb09-1234", "date":"06-11-2019"}
+    ]
+  }
+
+
+  validate(e){
+    if(e.target.value.length){
+      this.isForButton = true;
+    }
+  }
+
+
+  addVehical(){
+    this.modalRef.hide()
+    if(this.vehicaldetails.length <= 5){
+      this.vehicaldetails.push(this.vehicalObj);
+      this.vehicalObj = {"v_n":"" , "date":""}
+    }else{
+      alert("Booking is full you pushed to waiting list we will inform you when your booking will be confermied")
+      this.waittingList.push(this.vehicalObj)
+    }
+  }
+ 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
   ngOnInit() {
     this.chartColor = "#FFFFFF";

@@ -12,7 +12,8 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -21,8 +22,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,

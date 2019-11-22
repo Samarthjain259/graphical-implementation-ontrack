@@ -11,34 +11,34 @@
 
 <div class="main-content">
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Global Sales</h5>
-          <h4 class="card-title">Shipped Products</h4>
-          <div ngbDropdown>
-            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
-              <i class="now-ui-icons loader_gear"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu-right">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item text-danger" href="#">Remove Data</a>
-            </div>
-          </div>
+          <h5 class="card-category">Bookings</h5>
+          <div class="row">
+            <div class="col-md-10">
+          <h4 class="card-title">Booked Vehical</h4>
+        </div>
+        <div class="col-md-2 btn-round  p-3" (click)="openModal(template)"><i class="fas fa-plus"></i></div>
+        </div>
         </div>
         <div class="card-body">
-          <div class="chart-area">
-            <canvas baseChart id="lineChartExample"
-                        [datasets]="lineChartData"
-                        [labels]="lineChartLabels"
-                        [colors]="lineChartColors"
-                        [options]="lineChartOptions"
-                        [chartType]="lineChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+          <div class="row">
+              <div class="col-md-6 text-muted"> vehical Number </div>
+              <div class="col-md-6 text-muted"> Date </div>
           </div>
+            <div class="row" *ngFor="let vh of vehicaldetails">
+                <div class="col-md-5 text-muted">
+                  <ul>
+                    <li>{{vh.v_n}}</li>
+                  </ul>
+              </div>
+                <div class="col-md-6 text-muted">
+                  <ul>
+                    <li>{{vh.date}}</li>
+                  </ul>
+                </div>
+              </div>
         </div>
         <div class="card-footer">
           <div class="stats">
@@ -47,35 +47,58 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">2018 Sales</h5>
-          <h4 class="card-title">All products</h4>
-          <div ngbDropdown>
-            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
-              <i class="now-ui-icons loader_gear"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu-right">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item text-danger" href="#">Remove Data</a>
-            </div>
+
+    <!-- <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button> -->
+     
+    <ng-template #template >
+      <div class="modal-header bg-dark ">
+        <h6 class="modal-title pull-left text-danger">Add New Vehical</h6>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-secondary">
+        <div class="row">
+          <div class="col-md-6">Enter vehical Number <br>
+          <input type="text" placeholder="vehical Number" [(ngModel)]="vehicalObj.v_n" >
+        </div>
+          <div class="col-md-6">Enter Date <br>
+          <input type="date" [(ngModel)]="vehicalObj.date" (input)="validate($event)">
           </div>
         </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
-            <canvas baseChart id="lineChartExampleWithNumbersAndGrid"
-                        [datasets]="lineChartWithNumbersAndGridData"
-                        [labels]="lineChartWithNumbersAndGridLabels"
-                        [colors]="lineChartWithNumbersAndGridColors"
-                        [options]="lineChartWithNumbersAndGridOptions"
-                        [chartType]="lineChartWithNumbersAndGridType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+        <div class="row">
+            <div class="col-md-3 offset-md-9" *ngIf="isForButton">
+              <button class="btn btn-danger" (click)="addVehical()">Add</button>
+            </div>
           </div>
+      </div>
+    </ng-template>
+    <div class="col-lg-6 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Waiting List</h5>
+          <h4 class="card-title">All waitting List</h4>
+    
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 text-muted"> vehical Number </div>
+                    <div class="col-md-6 text-muted"> Date </div>
+                </div>
+                  <div class="row" *ngFor="let vh of waittingList">
+                      <div class="col-md-5 text-muted">
+                        <ul>
+                          <li>{{vh.v_n}}</li>
+                        </ul>
+                    </div>
+                      <div class="col-md-6 text-muted">
+                        <ul>
+                          <li>{{vh.date}}</li>
+                        </ul>
+                      </div>
+                    </div>
+              </div>
         </div>
         <div class="card-footer">
           <div class="stats">
@@ -84,30 +107,6 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Email Statistics</h5>
-          <h4 class="card-title">24 Hours Performance</h4>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas baseChart id="barChartSimpleGradientsNumbers"
-                        [datasets]="lineChartGradientsNumbersData"
-                        [labels]="lineChartGradientsNumbersLabels"
-                        [colors]="lineChartGradientsNumbersColors"
-                        [options]="lineChartGradientsNumbersOptions"
-                        [chartType]="lineChartGradientsNumbersType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-          </div>
-        </div>
-      </div>
-    </div>
+ 
   </div>
 </div>
